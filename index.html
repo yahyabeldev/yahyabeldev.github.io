@@ -275,11 +275,14 @@ h2.st{
 }
 .proj-thumb{height:230px;position:relative;overflow:hidden;}
 .proj-bg{
-  position:absolute;inset:0;display:flex;align-items:center;
-  justify-content:center;font-size:4.5rem;
+  position:absolute;inset:0;
   transition:transform .45s;
 }
-.proj-card:hover .proj-bg{transform:scale(1.07);}
+.proj-bg img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;transition:transform .45s;
+}
+.proj-card:hover .proj-bg img{transform:scale(1.07);}
 .proj-overlay{
   position:absolute;inset:0;background:rgba(0,0,0,.55);
   display:flex;align-items:center;justify-content:center;
@@ -541,6 +544,65 @@ footer{
   .cf-row{grid-template-columns:1fr;}
   #cur-dot,#cur-ring{display:none;}
 }
+
+/* ─── SITE PREVIEW MODAL ─── */
+#site-modal{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.82);backdrop-filter:blur(14px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#site-modal.open{display:flex;}
+.sm-window{
+  width:100%;max-width:900px;max-height:90vh;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 0 1px rgba(120,110,255,.12);
+  animation:smIn .3s cubic-bezier(.34,1.3,.64,1) both;
+}
+@keyframes smIn{from{transform:scale(.93) translateY(20px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+.sm-bar{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.75rem 1.1rem;
+  background:rgba(6,6,16,.9);border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.sm-dots{display:flex;gap:.45rem;}
+.sm-dot{width:12px;height:12px;border-radius:50%;}
+.sm-dot.red{background:#ff5f57;cursor:pointer;transition:filter .2s;}
+.sm-dot.red:hover{filter:brightness(1.3);}
+.sm-dot.yellow{background:#febc2e;}
+.sm-dot.green{background:#28c840;}
+.sm-url{
+  flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:6px;padding:.28rem .85rem;
+  font-size:.78rem;color:var(--muted);letter-spacing:.01em;
+  font-family:'Outfit',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sm-close-btn{
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:1.1rem;line-height:1;
+  padding:.2rem .4rem;border-radius:4px;transition:color .2s,background .2s;
+}
+.sm-close-btn:hover{color:var(--white);background:rgba(255,255,255,.08);}
+.sm-body{
+  overflow-y:auto;flex:1;
+  scrollbar-width:thin;scrollbar-color:var(--accent2) var(--bg);
+}
+.sm-body::-webkit-scrollbar{width:4px;}
+.sm-body::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px;}
+.sm-screenshots{display:flex;flex-direction:column;gap:0;}
+.sm-screenshots img{
+  width:100%;display:block;
+  border-bottom:1px solid var(--border);
+}
+.sm-screenshots img:last-child{border-bottom:none;}
+.sm-no-img{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:5rem 2rem;color:var(--muted);font-size:.9rem;gap:1rem;text-align:center;
+}
+.sm-no-img span{font-size:3rem;}
+
 </style>
 </head>
 <body>
@@ -615,13 +677,13 @@ footer{
         </div>
         <div class="float-card bl">
           <div class="fc-label">Projets livrés</div>
-          <div class="fc-val">20+</div>
+          <div class="fc-val">3+</div>
         </div>
       </div>
       <div class="about-body">
         <div class="section-tag rv">À propos</div>
         <h2 class="st rv">Je donne vie à vos projets digitaux</h2>
-        <p class="rv">Je suis <strong>Yahya BEL HAJJAM</strong>, développeur web freelance basé à Bordeaux. Je me spécialise dans la création de sites web performants et esthétiques pour les <strong>boutiques locales, startups et PME</strong> qui veulent se démarquer en ligne.</p>
+        <p class="rv">Je suis <strong>Yahya BEL HAJJAM</strong>, <strong>Ingénieur en informatique</strong> et <strong>développeur web</strong> freelance basé à Bordeaux. Formé à <strong>l’ENSEIRB-MATMECA</strong>, j’ai développé une forte appétence pour <strong>l’IA</strong> et le <strong>développement logiciel</strong>. Je me spécialise dans la création de <strong>sites web</strong> performants et esthétiques pour les <strong>boutiques locales, startups et PME</strong> qui veulent se démarquer en ligne.</p>
         <p class="rv">Mon approche : comprendre votre métier, vos clients, vos objectifs — puis créer un site qui <strong>travaille pour vous 24h/24</strong>.</p>
         <div class="pills rv">
           <span class="pill">HTML/CSS</span><span class="pill">JavaScript</span><span class="pill">React</span>
@@ -667,7 +729,7 @@ footer{
   <div class="stats-band">
     <div class="orb orb-a" style="top:-150px;right:-100px;"></div>
     <div class="stats-grid">
-      <div class="rv"><div class="stat-n" data-t="20" data-s="+">0</div><div class="stat-l">Projets livrés</div></div>
+      <div class="rv"><div class="stat-n" data-t="5" data-s="ans">0</div><div class="stat-l">d'ingénierie informatique après le baccalauréat</div></div>
       <div class="rv d1"><div class="stat-n" data-t="100" data-s="%">0</div><div class="stat-l">Clients satisfaits</div></div>
       <div class="rv d2"><div class="stat-n" data-t="3" data-s="ans">0</div><div class="stat-l">D'expérience</div></div>
       <div class="rv d3"><div class="stat-n" data-t="7" data-s="j">0</div><div class="stat-l">Délai moyen livraison</div></div>
@@ -770,9 +832,9 @@ footer{
     <div class="ap-grid">
       <div>
         <div class="about-body">
-          <p class="rv">Passionné par le web depuis plus de 3 ans, j'accompagne les <strong>boutiques locales, PME et entrepreneurs</strong> dans leur transformation digitale. Mon objectif : vous créer un site qui vous ressemble et qui génère vraiment des résultats.</p>
-          <p class="rv">Avant de me lancer en freelance, j'ai travaillé pour plusieurs agences web parisiennes où j'ai développé mon expertise en <strong>développement front-end, e-commerce et SEO</strong>.</p>
-          <p class="rv">Aujourd'hui je travaille directement avec vous — sans intermédiaire. Des projets plus personnalisés, plus rapides et plus efficaces.</p>
+        <p class="rv">Je suis<strong> Yahya BEL HAJJAM</strong>, <strong>ingénieur en informatique</strong> et <strong>développeur web freelance</strong> basé à <strong>Bordeaux</strong>. Formé à <strong>l’ENSEIRB-MATMECA</strong>, j’ai développé une forte appétence pour <strong>l’IA et le développement logiciel</strong>.</p>
+        <p class="rv">Passionné par le web depuis plus de 5 ans, j'accompagne les <strong>boutiques locales, PME et entrepreneurs</strong> dans leur transformation digitale. Mon objectif : vous créer un site qui vous ressemble et qui génère vraiment des résultats.</p>
+        <p class="rv">Aujourd'hui je travaille directement avec vous — sans intermédiaire. Des projets plus personnalisés, plus rapides et plus efficaces.</p>
         </div>
         <div class="values-list" style="margin-top:2.5rem">
           <div class="val-item rv">
@@ -811,17 +873,17 @@ footer{
             <div class="tl-item">
               <div class="tl-dot">🎓</div>
               <div>
-                <div class="tl-date">2020 – 2022</div>
-                <div class="tl-title">Formation Développement Web</div>
-                <div class="tl-desc">Formation intensive full-stack, spécialisation front-end et UX.</div>
+                <div class="tl-date">2021 – 2023</div>
+                <div class="tl-title">Classes Préparatoires aux Grandes Écoles (MP) — CPGE Casablanca, Maroc</div>
+                <div class="tl-desc">Formation intensive en mathématiques (algèbre linéaire, analyse) et informatique</div>
               </div>
             </div>
             <div class="tl-item">
               <div class="tl-dot">💼</div>
               <div>
-                <div class="tl-date">2022 – 2023</div>
-                <div class="tl-title">Développeur junior en agence</div>
-                <div class="tl-desc">Sites WordPress, e-commerce, refonte UI, SEO technique pour 15+ clients.</div>
+                <div class="tl-date">2023 – Présent</div>
+                <div class="tl-title">Diplôme d’Ingénieur en Informatique — ENSEIRB-MATMECA, Talence</div>
+                <div class="tl-desc">Formation intensive en cycle d'ingénieur</div>
               </div>
             </div>
             <div class="tl-item">
@@ -829,7 +891,7 @@ footer{
               <div>
                 <div class="tl-date">2023 – Présent</div>
                 <div class="tl-title">Freelance Développeur Web</div>
-                <div class="tl-desc">Accompagnement direct de commerces locaux et PME. 20+ projets livrés.</div>
+                <div class="tl-desc">Accompagnement direct de commerces locaux, PME et entrepreneurs. Création de sites performants et esthétiques.</div>
               </div>
             </div>
           </div>
@@ -907,9 +969,27 @@ footer{
   </div>
 </div>
 
+<!-- ── SITE PREVIEW MODAL ── -->
+<div id="site-modal" onclick="closeSiteModal(event)">
+  <div class="sm-window" id="sm-window">
+    <div class="sm-bar">
+      <div class="sm-dots">
+        <div class="sm-dot red" onclick="closeSiteModal()"></div>
+        <div class="sm-dot yellow"></div>
+        <div class="sm-dot green"></div>
+      </div>
+      <div class="sm-url" id="sm-url">yahyaweb.fr/projet</div>
+      <button class="sm-close-btn" onclick="closeSiteModal()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="sm-screenshots" id="sm-screenshots"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ── FOOTER ── -->
 <footer id="main-footer">
-  <span class="f-copy">© 2025 Yahya BEL HAJJAM — Développeur Web Freelance Paris</span>
+  <span class="f-copy">© 2025 Yahya BEL HAJJAM — Développeur Web Freelance</span>
   <div class="f-links">
     <a onclick="go('about')">À propos</a>
     <a onclick="go('services')">Services</a>
@@ -928,72 +1008,60 @@ footer{
 const PROJECTS = [
   {
     id:'boulangerie-martin',
-    title:'Boulangerie Artisanale Martin',
+    title:'Boulangerie Artisanale',
     cat:'Site Vitrine',
     short:'Refonte complète avec SEO local — +40% de nouveaux clients en 3 mois.',
-    desc:`La Boulangerie Martin avait besoin d'une présence en ligne digne de son savoir-faire artisanal. Nous avons créé un site vitrine élégant qui met en valeur les créations du boulanger et attire les clients du quartier.
-
-L'accent a été mis sur le référencement local (Google My Business + SEO On-Page) pour que la boulangerie apparaisse en premier sur les recherches "boulangerie [quartier]". Le site est entièrement mobile-first — 80% du trafic local vient du téléphone.
-
-Un menu des spécialités mis à jour chaque semaine, des photos professionnelles et un formulaire de contact simple ont transformé ce site en vrai outil business.`,
-    emoji:'🥐',
+    desc:``,
+    img:'img/bakery.png',
     grad:'linear-gradient(145deg,#78350f,#d97706,#fbbf24)',
     color:'#f59e0b',
     tags:['HTML/CSS','JavaScript','SEO Local','Mobile-first','Google Maps'],
     results:['+40% de clients découverts via Google','Classé #1 sur "boulangerie [quartier]"','320+ avis Google générés','Site livré en 6 jours'],
-    link:'#'
+    link:'#',
+    screenshots: ['img/bakery.png']  // ← Ajoute ici les chemins vers tes screenshots : ['img/boulangerie-1.jpg','img/boulangerie-2.jpg']
   },
   {
     id:'salon-lux',
     title:'Salon Lux Coiffure',
     cat:'Site Pro + Réservation',
     short:'Réservation en ligne intégrée — 70% de moins d\'appels téléphoniques.',
-    desc:`Le Salon Lux voulait moderniser son image et automatiser ses réservations. Le résultat : un site élégant avec un système de RDV intégré qui a transformé la gestion quotidienne du salon.
-
-Nous avons intégré un système de booking en ligne permettant aux clientes de réserver 24h/24 avec rappel SMS automatique. La galerie avant/après met en avant le savoir-faire des coiffeurs.
-
-L'identité visuelle a été entièrement repensée avec une palette premium et des photos retravaillées pour projeter une image haut de gamme cohérente sur tous les supports.`,
-    emoji:'✂️',
+    desc:``,
+    img:'img/barber.png',
     grad:'linear-gradient(145deg,#831843,#db2777,#f472b6)',
     color:'#ec4899',
     tags:['WordPress','Booking System','SMS Rappels','UX Design','Galerie Photo'],
     results:['+60% de taux de remplissage','-70% d\'appels téléphoniques','98% de satisfaction client','ROI positif en 2 mois'],
-    link:'#'
-  },
-  {
-    id:'mode-co',
-    title:'Mode & Co',
-    cat:'E-commerce Shopify',
-    short:'Boutique Shopify sur-mesure — 12 000€ de CA dès le premier mois.',
-    desc:`Mode & Co voulait vendre en ligne sans les commissions des marketplaces et avec une expérience d'achat premium. Nous avons construit une boutique Shopify entièrement personnalisée.
-
-La boutique propose 80+ produits avec des fiches optimisées, une recherche intelligente, des filtres par taille et couleur, et un panier persistant. L'intégration Instagram Shopping permet aux clients d'acheter directement depuis leur feed.
-
-Le checkout a été simplifié au maximum pour réduire l'abandon panier : paiement en 1 clic, Apple Pay, Google Pay, et une page de confirmation rassurante.`,
-    emoji:'👗',
-    grad:'linear-gradient(145deg,#3730a3,#4f46e5,#818cf8)',
-    color:'#6366f1',
-    tags:['Shopify','Instagram Shopping','Stripe','Analytics','A/B Testing'],
-    results:['12 000€ de CA le premier mois','3.2% taux de conversion (vs 1.8% moyenne)','45+ commandes/semaine','+200 abonnés newsletter/mois'],
-    link:'#'
-  },
-  {
-    id:'le-provencal',
-    title:'Le Provençal',
-    cat:'Restaurant Multilingue',
-    short:'Site bilingue FR/EN avec menu digital — 2 500 visiteurs/mois.',
-    desc:`Le restaurant Le Provençal accueille une clientèle internationale et avait besoin d'un site à la hauteur de sa gastronomie. Nous avons créé un site bilingue (FR/EN) avec une expérience visuelle premium.
-
-Le menu digital interactif permet de consulter les plats du jour, les menus et les suggestions du chef avec leurs photos. Le système de réservation en ligne s'intègre directement avec le logiciel de caisse.
-
-Une galerie photo immersive, des témoignages clients et une section "Notre Histoire" renforcent la marque et donnent envie de venir découvrir la cuisine provençale.`,
-    emoji:'🍽️',
-    grad:'linear-gradient(145deg,#064e3b,#059669,#34d399)',
-    color:'#10b981',
-    tags:['Next.js','Bilingue FR/EN','Réservations','Menu Digital','Photo Gallery'],
-    results:['2 500 visiteurs/mois','+80% de réservations en ligne','Mentionné dans un guide gastronomique','Livré en 8 jours'],
-    link:'#'
+    link:'#',
+    screenshots:['img/barberr.png']   // ← ['img/salon-1.jpg','img/salon-2.jpg']
   }
+//   {
+//     id:'mode-co',
+//     title:'Boutique Shopify',
+//     cat:'E-commerce Shopify',
+//     short:'Boutique Shopify sur-mesure — 12 000€ de CA dès le premier mois.',
+//     desc:``,
+//     img:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80',
+//     grad:'linear-gradient(145deg,#3730a3,#4f46e5,#818cf8)',
+//     color:'#6366f1',
+//     tags:['Shopify','Instagram Shopping','Stripe','Analytics','A/B Testing'],
+//     results:['12 000€ de CA le premier mois','3.2% taux de conversion (vs 1.8% moyenne)','45+ commandes/semaine','+200 abonnés newsletter/mois'],
+//     link:'#',
+//     screenshots:['img/shop.png']   // ← ['img/boutique-1.jpg','img/boutique-2.jpg']
+//   },
+//   {
+//     id:'le-provencal',
+//     title:'Restaurant Multilingue',
+//     cat:'site vitrine + réservation',
+//     short:'Site bilingue FR/EN avec menu digital — 2 500 visiteurs/mois.',
+//     desc:``,
+//     img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
+//     grad:'linear-gradient(145deg,#064e3b,#059669,#34d399)',
+//     color:'#10b981',
+//     tags:['Next.js','Bilingue FR/EN','Réservations','Menu Digital','Photo Gallery'],
+//     results:['2 500 visiteurs/mois','+80% de réservations en ligne','Mentionné dans un guide gastronomique','Livré en 8 jours'],
+//     link:'#',
+//     screenshots:[]   // ← ['img/restaurant-1.jpg','img/restaurant-2.jpg']
+//   }
 ];
 
 const SERVICES = [
@@ -1006,9 +1074,9 @@ const SERVICES = [
 ];
 
 const TESTIMONIALS = [
-  {text:"Yahya a transformé notre boulangerie en ligne ! En 2 mois, nous avons vu une belle hausse des nouveaux clients qui nous disent nous avoir trouvés sur Google. Le site est magnifique et facile à mettre à jour.",name:"Marie Martin",role:"Boulangerie Artisanale Martin",init:"MM"},
-  {text:"Mon salon a été révolutionné par la réservation en ligne. Mes clientes adorent pouvoir réserver à minuit ! Yahya a tout géré, je n'avais rien à faire. Je recommande les yeux fermés.",name:"Sophie Leblanc",role:"Salon Lux Coiffure",init:"SL"},
-  {text:"La boutique en ligne a dépassé toutes mes attentes. Premières ventes dès la première semaine. Yahya comprend les enjeux business, pas seulement le code. 10/10.",name:"Thomas Girard",role:"Mode & Co",init:"TG"}
+  {text:"Yahya a transformé notre boulangerie en ligne ! En 2 mois, nous avons vu une belle hausse des nouveaux clients qui nous disent nous avoir trouvés sur Google. Le site est magnifique et facile à mettre à jour.",name:"Marie Martin",role:"Client",init:"MM"},
+  {text:"Mon salon a été révolutionné par la réservation en ligne. Mes clientes adorent pouvoir réserver à minuit ! Yahya a tout géré, je n'avais rien à faire. Je recommande les yeux fermés.",name:"Sophie Leblanc",role:"Client",init:"SL"}
+//   {text:"La boutique en ligne a dépassé toutes mes attentes. Premières ventes dès la première semaine. Yahya comprend les enjeux business, pas seulement le code. 10/10.",name:"Thomas Girard",role:"Client",init:"TG"}
 ];
 
 /* ─── ROUTER ─── */
@@ -1056,7 +1124,7 @@ function renderProjects(id, count){
   c.innerHTML=items.map(p=>`
     <div class="proj-card rv" onclick="go('project','${p.id}')">
       <div class="proj-thumb">
-        <div class="proj-bg" style="background:${p.grad}">${p.emoji}</div>
+        <div class="proj-bg"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
         <div class="proj-overlay"><div class="proj-overlay-btn">Voir le projet →</div></div>
       </div>
       <div class="proj-info">
@@ -1105,7 +1173,7 @@ function renderPD(id){
           <div class="proj-tag-row">${p.tags.map(t=>`<span class="ptag">${t}</span>`).join('')}</div>
         </div>
         <div style="margin-top:2rem">
-          <a href="${p.link}" target="_blank" class="btn-p" style="display:inline-flex;align-items:center;gap:.5rem">Voir le site en live ↗</a>
+          <button class="btn-p" style="display:inline-flex;align-items:center;gap:.5rem" onclick="openSiteModal('${p.id}')">Voir le site ↗</button>
         </div>
       </div>
       <div>
@@ -1120,6 +1188,41 @@ function renderPD(id){
       </div>
     </div>`;
 }
+
+/* ─── SITE PREVIEW MODAL ─── */
+function openSiteModal(projId){
+  const p = PROJECTS.find(x => x.id === projId);
+  if(!p) return;
+  const modal = document.getElementById('site-modal');
+  const container = document.getElementById('sm-screenshots');
+  document.getElementById('sm-url').textContent = p.title + ' — aperçu du site';
+
+  if(p.screenshots && p.screenshots.length > 0){
+    container.innerHTML = p.screenshots.map(src =>
+      `<img src="${src}" alt="Screenshot ${p.title}" loading="lazy">`
+    ).join('');
+  } else {
+    container.innerHTML = `
+      <div class="sm-no-img">
+        <span>🖼️</span>
+        <strong style="color:var(--text)">Aucun screenshot pour l'instant</strong>
+        <p>Ajoute les chemins de tes images dans le tableau <code style="color:var(--accent);background:rgba(129,140,248,.1);padding:.1rem .4rem;border-radius:4px">screenshots</code> du projet <strong style="color:var(--text)">${p.id}</strong> dans le code.</p>
+      </div>`;
+  }
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSiteModal(e){
+  if(e && e.target !== document.getElementById('site-modal')) return;
+  document.getElementById('site-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeSiteModal();
+});
 
 /* ─── CANVAS PARTICLES ─── */
 function initCanvas(){
